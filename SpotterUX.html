@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spotter Gym Pairing | UX Portfolio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #050707;
+      --bg-soft: #0b1111;
+      --card: #101818;
+      --cyan: #20f7ff;
+      --green: #9dff00;
+      --text: #f5fafa;
+      --muted: #b6c7c7;
+      --line: rgba(32, 247, 255, 0.25);
+      --shadow: 0 0 28px rgba(32, 247, 255, 0.22);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(5, 7, 7, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: var(--cyan);
+      text-shadow: 0 0 18px rgba(32, 247, 255, 0.6);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a:hover {
+      color: var(--green);
+    }
+
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 90px 22px;
+      background:
+        radial-gradient(circle at 50% 30%, rgba(32, 247, 255, 0.22), transparent 35%),
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.85)),
+        url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1800&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero-content {
+      max-width: 950px;
+    }
+
+    .kicker {
+      color: var(--green);
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(3.2rem, 9vw, 8rem);
+      line-height: 0.95;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 0 32px rgba(32, 247, 255, 0.45);
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 24px auto 0;
+      color: var(--muted);
+      font-size: 1.2rem;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 36px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-weight: 800;
+      border: 1px solid var(--cyan);
+      box-shadow: var(--shadow);
+      transition: 0.25s ease;
+    }
+
+    .btn.primary {
+      background: var(--cyan);
+      color: #001010;
+    }
+
+    .btn.secondary {
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      border-color: var(--green);
+      box-shadow: 0 0 30px rgba(157, 255, 0, 0.25);
+    }
+
+    section {
+      padding: 92px 22px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .section-dark {
+      background: var(--bg);
+    }
+
+    .section-soft {
+      background: var(--bg-soft);
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      margin-bottom: 42px;
+      max-width: 860px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(2rem, 5vw, 4.2rem);
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .accent {
+      color: var(--cyan);
+    }
+
+    .green {
+      color: var(--green);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+      align-items: center;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: linear-gradient(145deg, rgba(16, 24, 24, 0.94), rgba(5, 9, 9, 0.96));
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 26px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      min-height: 100%;
+    }
+
+    .card:hover {
+      border-color: rgba(157, 255, 0, 0.55);
+      box-shadow: 0 0 24px rgba(157, 255, 0, 0.12);
+    }
+
+    .card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 12px;
+      color: var(--green);
+    }
+
+    .card p,
+    .card li {
+      color: var(--muted);
+    }
+
+    ul {
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .image-box {
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      min-height: 320px;
+      background: #111;
+    }
+
+    .image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .stat {
+      padding: 22px;
+      border-radius: 20px;
+      background: rgba(32, 247, 255, 0.08);
+      border: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 2.3rem;
+      color: var(--cyan);
+      margin-bottom: 6px;
+    }
+
+    .pill-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .pill {
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(157, 255, 0, 0.09);
+      border: 1px solid rgba(157, 255, 0, 0.3);
+      color: var(--green);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .mockup-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-top: 24px;
+    }
+
+    .phone {
+      border: 2px solid rgba(32,247,255,0.45);
+      border-radius: 32px;
+      padding: 12px;
+      background: #020404;
+      box-shadow: var(--shadow);
+      min-height: 410px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .phone h4 {
+      color: var(--cyan);
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 18px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 20px;
+      padding: 22px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .timeline-item strong {
+      color: var(--green);
+    }
+
+    .demo-box {
+      padding: 40px;
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(157,255,0,0.13), transparent 30%),
+        radial-gradient(circle at 80% 40%, rgba(32,247,255,0.16), transparent 30%),
+        var(--card);
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .qr-placeholder {
+      width: 180px;
+      height: 180px;
+      margin: 24px auto;
+      border-radius: 18px;
+      background: repeating-linear-gradient(45deg, #f5fafa 0 8px, #111 8px 16px);
+      border: 10px solid #fff;
+    }
+
+    .footer {
+      padding: 60px 22px;
+      text-align: center;
+      background: #020303;
+    }
+
+    .footer h2 {
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .footer p {
+      color: var(--muted);
+    }
+
+    @media (max-width: 900px) {
+      .grid-2,
+      .grid-3,
+      .stat-row,
+      .mockup-row {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+      }
+
+      section {
+        padding: 70px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="logo">SPOTTER</div>
+      <nav class="nav-links">
+        <a href="#problem">Problem</a>
+        <a href="#research">Research</a>
+        <a href="#journey">Journey Map</a>
+        <a href="#goals">Design Goals</a>
+        <a href="#hci">HCI</a>
+        <a href="#ethics">Ethics</a>
+        <a href="#testing">Testing</a>
+        <a href="#demo">Prototype</a>
+        <a href="#reflection">Reflection</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <div class="kicker">UX Portfolio Project</div>
+        <h1>Spotter<br />Gym Pairing</h1>
+        <p>Fitness accountability partner matching app designed through Human-Computer Interaction principles, accessibility, and social motivation.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="#demo">Launch Prototype</a>
+          <a class="btn secondary" href="#research">View UX Research</a>
+          <a class="btn secondary" href="#hci">HCI Principles</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-soft" id="overview">
+      <div class="container">
+        <div class="section-title">
+          <h2>What Is <span class="accent">Spotter?</span></h2>
+          <p>Spotter is a fitness accountability platform that helps users find workout partners based on goals, schedule, experience level, and motivation needs.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Personalized Matching</h3>
+            <p>Users connect with partners based on shared goals, workout styles, experience levels, and availability.</p>
+          </div>
+          <div class="card">
+            <h3>Social Accountability</h3>
+            <p>The app encourages consistency by giving users real people to check in with, train with, and stay motivated beside.</p>
+          </div>
+          <div class="card">
+            <h3>Accessible UX</h3>
+            <p>The interface uses readable typography, high contrast colors, large touch targets, and simplified navigation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-dark" id="problem">
+      <div class="container grid-2">
+        <div>
+          <div class="section-title">
+            <h2>The <span class="green">Problem</span> & Solution</h2>
+            <p>Many fitness apps focus on tracking progress, but they do not fully address the social side of motivation, accountability, safety, and long-term user engagement.</p>
+          </div>
+          <div class="card">
+            <h3>Problem Statement</h3>
+            <p>Students and gym users often struggle with consistency because they lack motivation, confidence, accountability, and social support.</p>
+            <ul>
+              <li>Users feel unmotivated when working out alone.</li>
+              <li>Beginners may feel intimidated by gym environments.</li>
+              <li>Finding reliable workout partners can be difficult.</li>
+              <li>Many fitness apps feel cluttered or overwhelming.</li>
+              <li>Users may feel unsafe or uncomfortable interacting with strangers online.</li>
+              <li>Some users lose motivation because workouts become repetitive and isolating.</li>
+            </ul>
+          </div>
+          <br />
+          <div class="card">
+            <h3>Solution</h3>
+            <p>Spotter solves this by creating a fitness-focused social experience centered around accountability, accessibility, and trust. The platform uses a swipe-based matching system where users can find accountability partners with similar goals, schedules, and interests.</p>
+          </div>
+        </div>
+        <div class="image-box">
+          <img src="https://images.unsplash.com/photo-1571019613914-85f342c6a11e?auto=format&fit=crop&w=1200&q=80" alt="People training in gym" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section-soft" id="research">
+      <div class="container">
+        <div class="section-title">
+          <h2>UX Research & <span class="accent">Personas</span></h2>
+          <p>User research helped identify the main barriers users face when trying to stay consistent with fitness routines.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Beginner College Student Persona</h3>
+            <p><strong>Goal:</strong> Build confidence, improve consistency, and find supportive workout partners.</p>
+            <ul>
+              <li>Feels intimidated going to the gym alone.</li>
+              <li>Needs encouragement and accountability.</li>
+              <li>Prefers a simple, beginner-friendly interface.</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill">Beginner Friendly</span>
+              <span class="pill">Motivation</span>
+              <span class="pill">Confidence</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Experienced Gym User Persona</h3>
+            <p><strong>Goal:</strong> Find reliable workout partners with compatible schedules and fitness goals.</p>
+            <ul>
+              <li>Struggles with unreliable workout partners.</li>
+              <li>Needs schedule and goal matching.</li>
+              <li>Values fast navigation and useful filters.</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill">Goal Matching</span>
+              <span class="pill">Scheduling</span>
+              <span class="pill">Efficiency</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat"><strong>74%</strong><span>wanted accountability support</span></div>
+          <div class="stat"><strong>68%</strong><span>struggled with consistency</span></div>
+          <div class="stat"><strong>81%</strong><span>preferred simplified interfaces</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-dark" id="blueprint">
+      <div class="container">
+        <div class="section-title">
+          <h2>The Blueprint: <span class="green">Designing For Connection</span></h2>
+          <p>Spotter was designed around one major idea: fitness motivation becomes stronger when users feel supported by real people.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Simple Interaction Flow</h3>
+            <p>Users can quickly move from profile setup to matching, filtering, connecting, and messaging without unnecessary steps.</p>
+          </div>
+          <div class="card">
+            <h3>Human-Centered Matching</h3>
+            <p>The app prioritizes goals, availability, comfort level, and shared interests instead of only focusing on fitness statistics.</p>
+          </div>
+          <div class="card">
+            <h3>Supportive Experience</h3>
+            <p>The design encourages positive reinforcement, accountability, and safer social interaction.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-soft" id="journey">
+      <div class="container">
+        <div class="section-title">
+          <h2>User Journey <span class="accent">Map</span></h2>
+          <p>The journey map shows how a college student moves from struggling alone with fitness consistency to building confidence through accountability, matching, reminders, and long-term support.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Persona Focus</h3>
+            <p>The journey focuses on college students and gym users who feel intimidated, have past failures with consistency, or struggle to keep going without accountability.</p>
+            <ul>
+              <li>Starts with skipping workouts and feeling discouraged.</li>
+              <li>Searches for support through apps or online resources.</li>
+              <li>Creates a profile and reviews potential accountability partners.</li>
+              <li>Schedules sessions, checks in, and attends workouts.</li>
+              <li>Builds streaks, confidence, and a stronger routine over time.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Problem & Solution</h3>
+            <p><strong>Problem:</strong> Users quit because they feel like they cannot stay consistent alone and do not have reliable accountability.</p>
+            <p><strong>Solution:</strong> Spotter pairs users by goals, fitness level, and schedule so they can commit, check in, and build consistent habits together.</p>
+          </div>
+        </div>
+
+        <br />
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Key Pain Points</h3>
+            <ul>
+              <li>Loneliness and missed workouts</li>
+              <li>Too many apps with no accountability</li>
+              <li>Onboarding friction</li>
+              <li>Mismatched partners</li>
+              <li>Scheduling conflicts</li>
+              <li>No follow-through</li>
+              <li>Plateau or relapse risk</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>User Emotions</h3>
+            <ul>
+              <li>Discouraged and embarrassed at the start</li>
+              <li>Hopeful but skeptical while searching</li>
+              <li>Nervous during signup and matching</li>
+              <li>Relieved when a partner feels compatible</li>
+              <li>Motivated and supported after scheduling</li>
+              <li>Proud and confident after building a routine</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Product Opportunities</h3>
+            <ul>
+              <li>Low-barrier social matching</li>
+              <li>Clear value and trust signals</li>
+              <li>Fast signup with profile tips</li>
+              <li>Smart matching by goals, level, and schedule</li>
+              <li>Integrated calendar and reminders</li>
+              <li>Check-in prompts and accountability tools</li>
+              <li>Streaks, rewards, and community support</li>
+            </ul>
+          </div>
+        </div>
+
+        <br />
+
+        <div class="card">
+          <h3>How This Influenced The Design</h3>
+          <p>The journey map helped connect user emotions and pain points directly to app features. Spotter’s matching, scheduling, reminders, check-ins, profile setup, and progress tools were designed to support users at each stage of the fitness accountability journey.</p>
+          <div class="pill-row">
+            <span class="pill">Smart Matching</span>
+            <span class="pill">Profile Setup</span>
+            <span class="pill">Reminders</span>
+            <span class="pill">Check-ins</span>
+            <span class="pill">Streaks</span>
+            <span class="pill">Community Support</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-soft" id="goals">
+      <div class="container">
+        <div class="section-title">
+          <h2>Design <span class="accent">Goals</span></h2>
+          <p>The design goals focus on connection, motivation, accessibility, and simplicity.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Personalized Matching</h3>
+            <p>Users can filter by goals, workout type, schedule, experience level, and age range.</p>
+          </div>
+          <div class="card">
+            <h3>Social Motivation</h3>
+            <p>Spotter encourages consistency through accountability partners, shared goals, real-time interaction, and positive reinforcement.</p>
+          </div>
+          <div class="card">
+            <h3>Accessibility & Inclusivity</h3>
+            <p>The interface includes large touch targets, high contrast colors, readable typography, minimal clutter, and simplified profile editing.</p>
+          </div>
+        </div>
+
+        <div class="mockup-row">
+          <div class="phone"><div><h4>Match Screen</h4><p>Swipe-based connect/pass interaction with clear feedback.</p></div></div>
+          <div class="phone"><div><h4>Profile Screen</h4><p>Edit goals, preferences, fitness level, and schedule.</p></div></div>
+          <div class="phone"><div><h4>Messages</h4><p>Users can communicate and stay accountable.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-dark" id="hci">
+      <div class="container">
+        <div class="section-title">
+          <h2>The Brains: <span class="green">HCI Principles In Action</span></h2>
+          <p>Spotter uses Human-Computer Interaction principles to create an interface that is intuitive, accessible, engaging, and visually appealing.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Color Psychology & Visual Hierarchy</h3>
+            <p>High-contrast neon accents guide attention, improve interaction visibility, and create an energetic fitness-tech mood.</p>
+          </div>
+          <div class="card">
+            <h3>Consistency & Recognition Patterns</h3>
+            <p>Repeated layouts, typography, colors, and navigation patterns improve learnability and user confidence.</p>
+          </div>
+          <div class="card">
+            <h3>Accessibility & Inclusive Design</h3>
+            <p>Readable text, large touch targets, high contrast, and simplified navigation support a wider range of users.</p>
+          </div>
+          <div class="card">
+            <h3>Cognitive Load Reduction</h3>
+            <p>Simple screens and minimal clutter help users focus on connecting with partners instead of learning a complicated system.</p>
+          </div>
+          <div class="card">
+            <h3>Recognition Over Recall</h3>
+            <p>Familiar swipe gestures, icons, and button patterns help users understand the app without memorizing instructions.</p>
+          </div>
+          <div class="card">
+            <h3>Fitts’s Law</h3>
+            <p>Large buttons and swipe zones make mobile interactions faster, easier, and more comfortable.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-dark" id="features">
+      <div class="container">
+        <div class="section-title">
+          <h2>Core <span class="green">Features</span></h2>
+          <p>These features help turn the UX research and HCI rationale into a practical user experience.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card"><h3>Swipe Matching</h3><p>Users connect or pass using a familiar and fast interaction model.</p></div>
+          <div class="card"><h3>Profile Customization</h3><p>Users can adjust their profile details, goals, fitness level, and workout preferences.</p></div>
+          <div class="card"><h3>Smart Filters</h3><p>Filters help users narrow matches by age range, schedule, workout style, and goals.</p></div>
+          <div class="card"><h3>Messaging</h3><p>Matches can communicate and plan workouts together for accountability.</p></div>
+          <div class="card"><h3>Visual Feedback</h3><p>Green hearts and red X indicators clearly show connect/pass decisions.</p></div>
+          <div class="card"><h3>Mobile First</h3><p>The interface was designed for touch interaction and quick mobile navigation.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-soft" id="ethics">
+      <div class="container">
+        <div class="section-title">
+          <h2>Ethics, Privacy & <span class="accent">Safety</span></h2>
+          <p>Spotter also considers the ethical responsibilities that come with social matching, personal data, and user safety. Since the app connects real users, trust and transparency are important parts of the design.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Ethics, Privacy & User Trust</h3>
+            <ul>
+              <li><strong>Consent:</strong> Users should clearly understand what personal data is being collected and why before creating a profile.</li>
+              <li><strong>Transparency:</strong> Match recommendations should be understandable so users know why they are paired with specific people.</li>
+              <li><strong>Privacy:</strong> Users should control profile visibility, messaging permissions, and personal information.</li>
+              <li><strong>AI Disclosure:</strong> Future versions should disclose when AI-generated recommendations or automated moderation systems are involved.</li>
+              <li><strong>Inclusivity:</strong> The design should support different fitness levels, comfort levels, and identity options.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Safety, Moderation & Future Improvements</h3>
+            <ul>
+              <li><strong>Current focus:</strong> The prototype emphasizes clear matching, user control, and a fitness-centered experience.</li>
+              <li><strong>Future report/block tools:</strong> Future versions should include report and block options to improve user safety.</li>
+              <li><strong>Age limits:</strong> Safer onboarding could include age boundaries and clearer community expectations.</li>
+              <li><strong>Moderation:</strong> Future versions could include moderation tools to reduce harassment or misuse.</li>
+              <li><strong>Privacy controls:</strong> Users should be able to control what information is visible to others.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-soft" id="accessibility">
+      <div class="container">
+        <div class="section-title">
+          <h2>WCAG 2.2 AA <span class="accent">Accessibility Audit</span></h2>
+          <p>The Spotter prototype was evaluated using accessibility-focused Human-Computer Interaction principles inspired by WCAG 2.2 AA standards. The audit focused on readability, interaction visibility, usability, and inclusive design practices.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Passing Criteria</h3>
+            <ul>
+              <li><strong>PASS:</strong> Strong text color contrast improves readability.</li>
+              <li><strong>PASS:</strong> Touch targets are large enough for easier interaction.</li>
+              <li><strong>PASS:</strong> Clear page structure and visual hierarchy improve navigation.</li>
+              <li><strong>PASS:</strong> Visible focus indicators improve interaction visibility.</li>
+              <li><strong>PASS:</strong> Error identification helps users recognize incorrect inputs.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Needs Review / Future Improvements</h3>
+            <ul>
+              <li><strong>REVIEW:</strong> Alternative text support for images.</li>
+              <li><strong>REVIEW:</strong> Improved keyboard-only navigation.</li>
+              <li><strong>REVIEW:</strong> Additional screen reader labels.</li>
+              <li><strong>REVIEW:</strong> Accessible alternatives for drag sliders.</li>
+              <li><strong>REVIEW:</strong> Reduced motion support for animations and effects.</li>
+            </ul>
+          </div>
+        </div>
+
+        <br />
+
+        <div class="card">
+          <h3>Accessibility Design Impact</h3>
+          <p>The accessibility audit reinforced the importance of inclusive interaction design throughout the Spotter prototype. High contrast visuals, readable typography, simplified layouts, and larger touch targets helped improve usability for a broader range of users. The audit also identified future opportunities for improving accessibility support and long-term inclusivity.</p>
+          <div class="pill-row">
+            <span class="pill">WCAG 2.2 AA</span>
+            <span class="pill">High Contrast</span>
+            <span class="pill">Readable Typography</span>
+            <span class="pill">Touch Accessibility</span>
+            <span class="pill">Keyboard Navigation</span>
+            <span class="pill">Inclusive Design</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-soft" id="testing">
+      <div class="container">
+        <div class="section-title">
+          <h2>The Lab: <span class="accent">Testing & Iteration</span></h2>
+          <p>After building the Spotter prototype, we collected feedback from 16 users to evaluate usability, visual design, safety concerns, and overall user satisfaction.</p>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat"><strong>4.13/5</strong><span>average ease-of-use rating</span></div>
+          <div class="stat"><strong>4.06/5</strong><span>average overall rating</span></div>
+          <div class="stat"><strong>75%</strong><span>would recommend Spotter</span></div>
+        </div>
+
+        <br /><br />
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>What Users Liked</h3>
+            <ul>
+              <li>The swipe-based matching feature felt familiar and easy to understand.</li>
+              <li>Users liked the app theme, color scheme, and overall visual style.</li>
+              <li>Several users described the idea as original and useful for finding workout partners.</li>
+              <li>The messaging system was viewed as a helpful accountability feature.</li>
+              <li>Users said the app was generally easy to navigate.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>What Needed Improvement</h3>
+            <ul>
+              <li>Users wanted a stronger profile page with profile pictures and bio editing.</li>
+              <li>Some users felt the app looked too similar to a dating app.</li>
+              <li>Users requested report and block options for safety.</li>
+              <li>Several responses suggested adding age limits and better privacy controls.</li>
+              <li>Some users wanted better visual feedback when connecting or passing.</li>
+            </ul>
+          </div>
+        </div>
+
+        <br />
+
+        <div class="card">
+          <h3>Design Changes Based On Feedback</h3>
+          <p>The feedback directly influenced later design decisions. The prototype was improved by adding stronger profile editing, clearer connect/pass feedback, safety and moderation controls, more transparent matching, and a stronger focus on fitness accountability instead of dating-style interaction.</p>
+          <div class="pill-row">
+            <span class="pill">Profile Editing</span>
+            <span class="pill">Report / Block</span>
+            <span class="pill">Swipe Feedback</span>
+            <span class="pill">Age Limits</span>
+            <span class="pill">Dark Mode</span>
+            <span class="pill">Match Transparency</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-soft" id="demo">
+      <div class="container">
+        <div class="section-title">
+          <h2>Interactive <span class="accent">Prototype</span></h2>
+          <p>The prototype demonstrates the main user flow: profile setup, matching, filtering, connecting, and messaging.</p>
+        </div>
+
+        <div class="demo-box">
+          <h3>Launch The Spotter Demo</h3>
+          <p>Launch the live Spotter prototype to explore the swipe matching system, profile customization, messaging features, and fitness accountability workflow.</p>
+          
+          <div class="btn-row">
+            <a class="btn primary" href="https://brandon-lawson1121.github.io/spotter-app/" target="_blank">Open Prototype</a>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-dark" id="reflection">
+      <div class="container">
+        <div class="section-title">
+          <h2>Team <span class="green">Reflection</span></h2>
+          <p>This project helped the team practice real UX roles while applying research, design, theory, and accessibility to one product concept.</p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <strong>What We Learned</strong>
+            <p>We learned how human-centered design, usability, accessibility, and visual hierarchy work together to create stronger user experiences.</p>
+          </div>
+          <div class="timeline-item">
+            <strong>Challenges</strong>
+            <p>The biggest challenges were balancing simplicity with functionality, keeping the interface consistent, and making the app feel safe and inclusive.</p>
+          </div>
+          <div class="timeline-item">
+            <strong>Team Roles</strong>
+            <p>Our work connected UX research, interaction design, HCI analysis, storytelling, and ethics/accessibility into one complete portfolio.</p>
+          </div>
+          <div class="timeline-item">
+            <strong>Testing Impact</strong>
+            <p>User feedback helped us identify missing features such as profile editing, report/block tools, age limits, and clearer connect/pass feedback.</p>
+          </div>
+          <div class="timeline-item">
+            <strong>Final Outcome</strong>
+            <p>Spotter became a fitness app concept that focuses not only on workouts, but also on connection, motivation, trust, safety, and accessibility.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <h2>Thank You</h2>
+    <p>Spotter Gym Pairing — CIS 435 UX Portfolio Project | Spring 2026</p>
+    <div class="btn-row">
+      <a class="btn primary" href="#home">Back To Top</a>
+      <a class="btn secondary" href="https://brandon-lawson1121.github.io/spotter-app/" target="_blank">Launch Prototype</a>
+    </div>
+  </footer>
+</body>
+</html>
