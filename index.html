@@ -430,93 +430,89 @@
     }
 
     .inclusive-grid {
-      display: flex;
-      gap: 40px;
-      margin-top: 24px;
-      flex-wrap: wrap;
-    }
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  margin-top: 24px;
+}
 
-    .inclusive-column {
-      flex: 1;
-      min-width: 300px;
-    }
+.inclusive-card {
+  background: rgba(5, 12, 12, 0.82);
+  border: 1px solid rgba(32, 247, 255, 0.35);
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: none;
+  transition: 0.3s ease;
+}
 
-    .inclusive-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      margin-bottom: 26px;
-    }
+.inclusive-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(32, 247, 255, 0.7);
+  box-shadow: 0 0 20px rgba(32, 247, 255, 0.12);
+}
 
-    .inclusive-item p {
-      color: var(--muted);
-      line-height: 1.7;
-    }
+.inclusive-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 26px;
+}
 
-    .inclusive-item strong {
-      color: var(--text);
-    }
+.inclusive-item:last-child {
+  margin-bottom: 0;
+}
 
-    .dot {
-      width: 10px;
-      height: 10px;
-      background: var(--cyan);
-      border-radius: 50%;
-      margin-top: 10px;
-      flex-shrink: 0;
-      box-shadow: 0 0 12px rgba(32,247,255,0.75);
-    }
+.inclusive-item p {
+  color: var(--muted);
+  line-height: 1.7;
+}
 
-    .heuristic-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 28px;
-      margin-top: 28px;
-      margin-bottom: 38px;
-    }
+.inclusive-item strong {
+  color: var(--text);
+}
 
-    .footer {
-      padding: 60px 22px;
-      text-align: center;
-      background: #020303;
-    }
+.dot {
+  width: 10px;
+  height: 10px;
+  background: var(--cyan);
+  border-radius: 50%;
+  margin-top: 10px;
+  flex-shrink: 0;
+  box-shadow: 0 0 12px rgba(32,247,255,0.75);
+}
 
-    .footer h2 {
-      font-size: clamp(2.4rem, 6vw, 5rem);
-      color: var(--cyan);
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-
-    .footer p {
-      color: var(--muted);
-    }
-
-    @media (max-width: 900px) {
-      .grid-2,
-      .grid-3,
-      .stat-row,
-      .mockup-row {
-        grid-template-columns: 1fr;
-      }
-
+@media (max-width: 900px) {
+  .inclusive-grid {
+    grid-template-columns: 1fr;
+  }
+}
       .timeline-item {
         grid-template-columns: 1fr;
       }
 
       .nav-inner {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 16px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
       .nav-links {
-        justify-content: flex-start;
-      }
+  display: flex;
+  gap: 18px;
+  font-size: 0.9rem;
+  color: var(--muted);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-left: auto;
+}
 
       section {
         padding: 70px 18px;
       }
-    }
+
   </style>
 </head>
 <body>
@@ -967,49 +963,51 @@
 
 
     <section class="section-dark" id="inclusive">
-      <div class="container">
-        <div class="section-title">
-          <h2>Inclusive Design <span class="green">Recommendations</span></h2>
-          <p>Beyond accessibility standards and usability testing, Spotter also focuses on inclusive design practices that help users feel represented, supported, and comfortable throughout the experience.</p>
+  <div class="container">
+    <div class="section-title">
+      <h2>Inclusive Design <span class="green">Recommendations</span></h2>
+      <p>
+        Beyond accessibility standards and usability testing, Spotter also focuses on inclusive design practices that help users feel represented, supported, and comfortable throughout the experience.
+      </p>
+    </div>
+
+    <div class="inclusive-grid">
+      <div class="card inclusive-card">
+        <div class="inclusive-item">
+          <span class="dot"></span>
+          <p><strong>Gender Inclusivity</strong> — Added non-binary and custom gender options so all users feel represented and matched correctly.</p>
         </div>
 
-        <div class="inclusive-grid">
-          <div class="inclusive-column">
-            <div class="inclusive-item">
-              <span class="dot"></span>
-              <p><strong>Gender Inclusivity</strong> — Added non-binary and custom gender options so all users feel represented and matched correctly.</p>
-            </div>
+        <div class="inclusive-item">
+          <span class="dot"></span>
+          <p><strong>Scalable Text</strong> — Font sizes should respect system accessibility settings to improve readability for users with visual impairments.</p>
+        </div>
 
-            <div class="inclusive-item">
-              <span class="dot"></span>
-              <p><strong>Scalable Text</strong> — Font sizes should respect system accessibility settings to improve readability for users with visual impairments.</p>
-            </div>
-
-            <div class="inclusive-item">
-              <span class="dot"></span>
-              <p><strong>Reduced Motion</strong> — Future versions should include reduced motion support for users sensitive to animations or visual effects.</p>
-            </div>
-          </div>
-
-          <div class="inclusive-column">
-            <div class="inclusive-item">
-              <span class="dot"></span>
-              <p><strong>Plain Language</strong> — Notifications and matching explanations should avoid technical jargon and use simple, understandable language.</p>
-            </div>
-
-            <div class="inclusive-item">
-              <span class="dot"></span>
-              <p><strong>AI Transparency</strong> — Users should clearly understand whether interactions, moderation, or recommendations are powered by AI systems.</p>
-            </div>
-
-            <div class="inclusive-item">
-              <span class="dot"></span>
-              <p><strong>Diverse Imagery</strong> — The app should represent users with different body types, experience levels, ages, and backgrounds.</p>
-            </div>
-          </div>
+        <div class="inclusive-item">
+          <span class="dot"></span>
+          <p><strong>Reduced Motion</strong> — Future versions should include reduced motion support for users sensitive to animations or visual effects.</p>
         </div>
       </div>
-    </section>
+
+      <div class="card inclusive-card">
+        <div class="inclusive-item">
+          <span class="dot"></span>
+          <p><strong>Plain Language</strong> — Notifications and matching explanations should avoid technical jargon and use simple, understandable language.</p>
+        </div>
+
+        <div class="inclusive-item">
+          <span class="dot"></span>
+          <p><strong>AI Transparency</strong> — Users should clearly understand whether interactions, moderation, or recommendations are powered by AI systems.</p>
+        </div>
+
+        <div class="inclusive-item">
+          <span class="dot"></span>
+          <p><strong>Diverse Imagery</strong> — The app should represent users with different body types, experience levels, ages, and backgrounds.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
     <section class="section-soft" id="testing">
       <div class="container">
